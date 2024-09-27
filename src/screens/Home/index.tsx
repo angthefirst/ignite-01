@@ -1,4 +1,5 @@
 import {
+    Alert,
     FlatList,
     Image,
     Keyboard,
@@ -20,8 +21,51 @@ export function Home(){
     const [isInputFocused, setInputFocused] = useState(false);
     const [isBtnAddFocused, setBtnAddFocused] = useState(false);
     const [text, setText] = useState('');
-    const [tasks, setTasks] = useState<Array<TaskEntity>>([new TaskEntity("abc", "Tarefa 1", false),
-        new TaskEntity("123", "Tarefa 2", false)]);
+    const [tasks, setTasks] = useState<Array<TaskEntity>>([]);
+
+    function handleOnCheck(task: TaskEntity) {
+        const newTasks = tasks.map(t => {
+            if (t.uuid === task.uuid) {
+                t.isCompleted = !t.isCompleted;
+            }
+            return t;
+        });
+        setTasks(newTasks);
+    }
+
+    function handleOnDelete(task: TaskEntity) {
+        Alert.alert("Atenção", "Deseja realmente excluir a tarefa?", [
+            {
+                text: "Sim",
+                onPress: () => {
+                    const newTasks = tasks.filter(t => t.uuid !== task.uuid);
+                    setTasks(newTasks);
+                }
+            },
+            {
+                text: "Não"
+            }
+        ]);
+    }
+
+    function getQuantityOfTasks() {
+        return tasks.length;
+    }
+
+    function getCompletedTasks() {
+        return tasks.reduce((acumulator, task) => task.isCompleted ? acumulator + 1 : acumulator, 0);
+    }
+
+    function handleAddTodo() {
+        if (text.trim() === "" || text == "") {
+            Alert.alert("Atenção", "A tarefa não pode ser vazia");
+            return;
+        }
+
+        const newTask = new TaskEntity(Math.random().toString(36).substring(7), text, false);
+        setTasks([...tasks, newTask]);
+        setText("");
+    }
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -44,17 +88,18 @@ export function Home(){
                         value={text}
                     />
                     <TouchableOpacity style={isBtnAddFocused? styles.button : styles.buttonPressed}
-                                      activeOpacity={0.9}
-                                      onPress={() => setBtnAddFocused(true)}
-                                      onBlur={() => setInputFocused(false)}
+                                      activeOpacity={1}
+                                      onPressIn={() => setBtnAddFocused(true)}
+                                      onPressOut={() => setBtnAddFocused(false)}
                     >
-                        <AntDesign name="pluscircleo" size={24} style={styles.buttonText} color={theme.colors.gray100}/>
+                        <AntDesign onPress={() => handleAddTodo()}
+                            name="pluscircleo" size={24} style={styles.buttonText} color={theme.colors.gray100}/>
                     </TouchableOpacity>
                 </View>
 
                 <View style={styles.subMenuContainer}>
-                    <SubMenu color={theme.colors.blue} quantity={5} text={"Criadas"}/>
-                    <SubMenu color={theme.colors.purpleDark} quantity={2} text={"Concluídas"}/>
+                    <SubMenu color={theme.colors.blue} quantity={getQuantityOfTasks()} text={"Criadas"}/>
+                    <SubMenu color={theme.colors.purpleDark} quantity={getCompletedTasks()} text={"Concluídas"}/>
                 </View>
                 {tasks.length == 0 &&
                     <View style={styles.horizontalBar}/>
@@ -62,7 +107,9 @@ export function Home(){
 
                 <FlatList data={tasks}
                           renderItem={({item}) => (
-                    <Task task={item}/>
+                    <Task task={item}
+                          onDelete={(task: TaskEntity) => handleOnDelete(task)}
+                          onCheck={(task: TaskEntity) => handleOnCheck(task)} />
                 )}
                           ListEmptyComponent={
                               <View>
