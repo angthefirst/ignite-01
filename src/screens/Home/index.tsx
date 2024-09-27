@@ -1,14 +1,27 @@
-import {Image, Keyboard, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View} from "react-native";
+import {
+    FlatList,
+    Image,
+    Keyboard,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    TouchableWithoutFeedback,
+    View
+} from "react-native";
 import {styles} from "./styles";
 import {theme} from "../../theme/theme";
 import {useState} from "react";
 import {SubMenu} from "../../components/SubMenu";
 import { AntDesign } from "@expo/vector-icons";
+import {TaskEntity} from "../../domain/TaskEntity";
+import {Task} from "../../components/Task";
 
 export function Home(){
     const [isInputFocused, setInputFocused] = useState(false);
     const [isBtnAddFocused, setBtnAddFocused] = useState(false);
     const [text, setText] = useState('');
+    const [tasks, setTasks] = useState<Array<TaskEntity>>([new TaskEntity("abc", "Tarefa 1", false),
+        new TaskEntity("123", "Tarefa 2", false)]);
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -40,19 +53,29 @@ export function Home(){
                 </View>
 
                 <View style={styles.subMenuContainer}>
-                    <SubMenu color={theme.colors.blue} quantity={0} text={"Criadas"}/>
-                    <SubMenu color={theme.colors.purpleDark} quantity={0} text={"Concluídas"}/>
+                    <SubMenu color={theme.colors.blue} quantity={5} text={"Criadas"}/>
+                    <SubMenu color={theme.colors.purpleDark} quantity={2} text={"Concluídas"}/>
                 </View>
-                <View style={styles.horizontalBar}/>
+                {tasks.length == 0 &&
+                    <View style={styles.horizontalBar}/>
+                }
 
-                <View>
-                    <Image
-                        source={require('../../../assets/clipboard.png')}
-                        style={styles.logoEmpty}
-                        resizeMode={"contain"}/>
-                    <Text style={[styles.textEmpty, {fontWeight: "bold"}]}>Você ainda não tem tarefas cadastradas</Text>
-                    <Text style={styles.textEmpty}>Crie tarefas e organize seus itens a fazer</Text>
-                </View>
+                <FlatList data={tasks}
+                          renderItem={({item}) => (
+                    <Task task={item}/>
+                )}
+                          ListEmptyComponent={
+                              <View>
+                                  <Image
+                                      source={require('../../../assets/clipboard.png')}
+                                      style={styles.logoEmpty}
+                                      resizeMode={"contain"}/>
+                                  <Text style={[styles.textEmpty, {fontWeight: "bold"}]}>Você ainda não tem tarefas
+                                      cadastradas</Text>
+                                  <Text style={styles.textEmpty}>Crie tarefas e organize seus itens a fazer</Text>
+                              </View>
+                          }
+                />
             </View>
         </TouchableWithoutFeedback>
     )

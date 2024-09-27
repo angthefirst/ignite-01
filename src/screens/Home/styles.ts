@@ -61,11 +61,12 @@ export const styles = StyleSheet.create({
         marginLeft: 20,
         marginRight: 20,
         marginTop: 35,
+        marginBottom: 20,
     },
     horizontalBar: {
         borderBottomColor: theme.colors.gray400,
         borderBottomWidth: 1,
-        marginTop: 15,
+        marginTop: 3,
         marginLeft: 20,
         marginRight: 20,
     },
