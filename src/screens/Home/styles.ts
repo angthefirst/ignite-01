@@ -20,12 +20,12 @@ export const styles = StyleSheet.create({
     },
     input: {
         flex: 1,
-        height: 63,
+        height: 55,
         borderRadius: 5,
         color: '#FFF',
         padding: 16,
-        fontSize: 18,
-        marginRight: 12,
+        fontSize: 16,
+        marginRight: 6,
         backgroundColor: theme.colors.gray500,
     },
     inputContainer: {
@@ -36,12 +36,12 @@ export const styles = StyleSheet.create({
     },
     buttonText: {
         color: '#FFF',
-        fontSize: 24,
+        fontSize: 16,
         fontWeight: 'bold'
     },
     button: {
-        width: 56,
-        height: 63,
+        width: 55,
+        height: 55,
         borderRadius: 5,
         backgroundColor: theme.colors.blueDark,
         justifyContent: 'center',
@@ -60,5 +60,12 @@ export const styles = StyleSheet.create({
         marginTop: 15,
         marginLeft: 20,
         marginRight: 20,
-    }
+    },
+    clearButtonText: {
+        color: '#FFF',
+        fontSize: 16,
+        fontWeight: 'bold',
+        position: "absolute",
+    },
+    clearButton: {}
 });
