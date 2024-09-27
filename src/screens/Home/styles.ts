@@ -47,6 +47,14 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    buttonPressed: {
+        width: 55,
+        height: 55,
+        borderRadius: 5,
+        backgroundColor: theme.colors.blue,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     subMenuContainer: {
         flexDirection: "row",
         justifyContent: "space-between",
@@ -56,7 +64,7 @@ export const styles = StyleSheet.create({
     },
     horizontalBar: {
         borderBottomColor: theme.colors.gray400,
-        borderBottomWidth: 2,
+        borderBottomWidth: 1,
         marginTop: 15,
         marginLeft: 20,
         marginRight: 20,
@@ -67,5 +75,17 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold',
         position: "absolute",
     },
-    clearButton: {}
+    clearButton: {},
+    logoEmpty: {
+        width: 56,
+        height: 56,
+        marginTop: 50,
+        marginBottom: 20,
+        alignSelf: "center",
+    },
+    textEmpty: {
+        fontSize: 14,
+        alignSelf: "center",
+        color: theme.colors.gray300,
+    },
 });

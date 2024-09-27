@@ -12,14 +12,14 @@ export const styles = StyleSheet.create({
     quantity: {
         marginLeft: 8,
         backgroundColor: theme.colors.gray400,
-        borderRadius: 20,
-        marginTop: -3,
+        borderRadius: 80,
     },
     quantityText: {
-        color: theme.colors.gray100,
-        padding: 5,
+        color: theme.colors.gray200,
+        padding: 3,
         paddingRight: 10,
         paddingLeft: 10,
         fontWeight: "bold",
+        fontSize: 12
     }
 });
